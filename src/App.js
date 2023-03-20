@@ -1,59 +1,57 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import Home from "./components/Home";
-import Intro from "./components/Intro";
 import Navbar from "./components/Navbar";
-// import Signup from './page/Signup';
-import Login from './components/Login';
-import { BrowserRouter as Router} from 'react-router-dom';
-import {Routes, Route} from 'react-router-dom';
+import Login from "./components/Login";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { initializeApp } from "firebase/app";
-import firebase from 'firebase/compat/app';
-import {onAuthStateChanged} from 'firebase/auth';
-import Dashboard from './components/Dashboard';
+import firebase from "firebase/compat/app";
+import { onAuthStateChanged } from "firebase/auth";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   const firebaseConfig = {
-    // apiKey: process.env.FIREBASE_KEY,
     apiKey: "AIzaSyBs0-994tF5RJO1qT8Qs4Br6YSJZXpiYRs",
     authDomain: "apprecial-be044.firebaseapp.com",
     projectId: "apprecial-be044",
     storageBucket: "apprecial-be044.appspot.com",
     messagingSenderId: "1015323762692",
     appId: "1:1015323762692:web:e39f5de18020f0724a5551",
-    measurementId: "G-8XBXF2TK1E"
+    measurementId: "G-8XBXF2TK1E",
   };
-  
+
   // Initialize Firebase
   // const app = initializeApp(firebaseConfig);
-   firebase.initializeApp(firebaseConfig);
-   const [user, setUser] = useState({email: '', uid: ''})
-   useEffect(()=>{
-onAuthStateChanged(firebase.auth(), (user)=>{
-  // console.log(user);
-  setUser({email: user.email, uid: user.uid});
-});
-   });
+  firebase.initializeApp(firebaseConfig);
+  const [user, setUser] = useState({ email: "", uid: "" });
+  useEffect(() => {
+    onAuthStateChanged(firebase.auth(), (user) => {
+      // console.log(user);
+      setUser({ email: user.email, uid: user.uid });
+    });
+  });
 
-   const isLoggedIn = window.localStorage.getItem("loggedIn");
+  const isLoggedIn = window.localStorage.getItem("loggedIn");
 
   return (
     <div className="App">
-    <Router>
-      <Navbar/>
-    <Routes>
-    <Route
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route
             exact
             path="/"
-            element={isLoggedIn === "true" ? <Dashboard user={user}/> : <Home/>}
+            element={
+              isLoggedIn === "true" ? <Dashboard user={user} /> : <Home />
+            }
           />
-    {/* <Route path="/" element={<Home/>} /> */}
-    <Route path="/login" element={<Login auth={firebase.auth()}/>} />
-    <Route path="/dashboard" element={<Dashboard user={user}/>} />
-    <Route path="*" element={<Home/>} />
-  </Routes>
-  </Router>
-  </div>
-   );
+          <Route path="/login" element={<Login auth={firebase.auth()} />} />
+          <Route path="/dashboard" element={<Dashboard user={user} />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </Router>
+    </div>
+  );
 }
 
 export default App;
