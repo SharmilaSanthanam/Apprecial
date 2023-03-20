@@ -14,7 +14,7 @@ const Login = (props) => {
                 }
             ],
             
-            signInSuccessUrl: '/dashboard',
+            signInSuccessUrl: 'https://apprecial-task.netlify.app/dashboard',
             privacyPolicyUrl: '<your-url>'
         });
        
